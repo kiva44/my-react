@@ -8,6 +8,16 @@ export default function Shop() {
   let url = "https://fakestoreapi.com/products";
   let [products, stateProducts] = useState([]);
 
+  useEffect(() => {
+    fetch(url)
+      .then((result) => {
+        return result.json();
+      })
+      .then((jsonResult) => {
+        stateProducts(jsonResult);
+      });
+  }, []);
+
   let [isOpen, stateIsOpen] = useState(false)
 
   function updCount(id, upd) {
@@ -27,15 +37,6 @@ export default function Shop() {
 
 
 
-  useEffect(() => {
-    fetch(url)
-      .then((result) => {
-        return result.json();
-      })
-      .then((jsonResult) => {
-        stateProducts(jsonResult);
-      });
-  }, []);
 
   return (
     <>
@@ -48,7 +49,7 @@ export default function Shop() {
                 <div className={styles.product}>
                   <img className="" src={product.image}></img><br></br>
                   {/* <div>{product.title}</div> */}
-                  <Link to={`product/${product.id}`}>{product.title}</Link>
+                  <Link to={`${product.id}`}>{product.title}</Link>
                   <br />
                   <div>
 
@@ -68,13 +69,12 @@ export default function Shop() {
                   </div>
 
                   <button className={styles.button} onClick={() => {
-                    // console.log(product);
-                    stateIsOpen(true)
-                    console.log(isOpen);
-                  }
-                  }>Подробнее</button>
 
-                  <ShopCard key={product} props={product} visible={isOpen} />
+
+                  }
+                  }><Link to={`${product.id}`} >Подробнее</Link></button>
+
+
 
                 </div>
               </div>
